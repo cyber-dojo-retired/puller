@@ -21,10 +21,13 @@ class Runner
   # - - - - - - - - - - - - - - - -
 
   def pull_image(id:, image_name:)
-    # TODO: write to /tmp/ file so test can retrieve it
-    puts("tid:#{Thread.current.object_id}, id:#{id}, image_name:#{image_name}")
-    #sleep 1
-    { 'pull_image' => 'TODO' }
+    Process.detach(fork {
+      # TODO: write infoto /tmp/ file so test can retrieve it
+      puts("pid:#{Process.pid}, id:#{id}, image_name:#{image_name}")
+      #puts `ps -aux`
+      sleep 1
+    })
+    { 'pull_image' => 'TODO' } # return ip-address?
   end
 
   private

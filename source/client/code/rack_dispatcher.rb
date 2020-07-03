@@ -14,9 +14,6 @@ class RackDispatcher
     request = Rack::Request.new(env)
     path = request.path_info
     body = request.body.read
-
-    puts "Runner.RackDispatcher.call(#{path},#{body})"
-
     result = HttpJsonArgs.new.get(path, @runner, body)
     json_response_success(result)
   rescue HttpJson::RequestError => error

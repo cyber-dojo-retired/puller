@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require_relative 'runner_async'
+require_relative 'runner_http_proxy'
 
 class Puller
 
@@ -21,28 +21,27 @@ class Puller
 
   # - - - - - - - - - - - - - - - -
 
-  def async_pull_images(id:, image_name:)
-    puts "Hello from puller.async_pull_images()"
+  def pull_images(id:, image_name:)
     n = 16
     n.times do |i|
-      runner_async('runner').pull_image(id+"-#{i}", image_name)
+      runner('runner').pull_image(id+"-#{i}", image_name)
     end
-    { 'async_pull_images' => nil }
+    { 'pull_images' => 'TODO' }
   end
 
   # - - - - - - - - - - - - - - - -
 
-  def async_pull_image(id:, image_name:, ip_address:)
-    runner_async(ip_address).pull_image(id, image_name)
-    { 'async_pull_image' => nil }
+  def pull_image(id:, image_name:, ip_address:)
+    runner(ip_address).pull_image(id, image_name)
+    { 'pull_image' => 'TODO' }
   end
 
   # - - - - - - - - - - - - - - - -
 
   private
 
-  def runner_async(hostname)
-    RunnerAsync.new(@externals, hostname)
+  def runner(hostname)
+    RunnerHttpProxy.new(@externals, hostname)
   end
 
 end

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
-require_relative 'external_http_async'
+require 'net/http'
 
 class Externals
 
   def initialize(options = {})
-    @http_async = options[:http_async] || ExternalHttpAsync.new(self)
+    @http = options[:http] || Net::HTTP
   end
 
-  attr_reader :http_async
+  attr_reader :http
 
 end

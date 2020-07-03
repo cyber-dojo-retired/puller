@@ -32,7 +32,7 @@ class PullerHttpProxy
 
   # - - - - - - - - - - - - - - - - - -
 
-  def async_pull_images(id, image_name)
+  def pull_images(id, image_name)
     @http.post(__method__, {
       id:id,
       image_name:image_name
@@ -41,7 +41,7 @@ class PullerHttpProxy
 
   # - - - - - - - - - - - - - - - - - -
 
-  def async_pull_image(id, image_name, ip_address)
+  def pull_image(id, image_name, ip_address)
     @http.post(__method__, {
       id:id,
       image_name:image_name,

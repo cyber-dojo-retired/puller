@@ -15,8 +15,13 @@ class PullImagesTest < ClientTestBase
   runner-client is the only runner, so it receives all 16 calls,
   which write to /tmp
   ) do
-    puller.async_pull_images(id58, gcc_assert)
+    puller.pull_images(id58, gcc_assert)
+    #TODO
   end
+
+  # TODO
+  # puller.pull_images(id58, gcc_assert, my_ip_address)
+  # ...
 
   private
 

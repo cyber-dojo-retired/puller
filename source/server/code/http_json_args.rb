@@ -16,11 +16,11 @@ class HttpJsonArgs
   def self.dispatch(path, puller, body)
     args = parse_json_args(body)
     case path
-    when '/sha'               then puller.sha(**args)
-    when '/alive'             then puller.alive?(**args)
-    when '/ready'             then puller.ready?(**args)
-    when '/async_pull_images' then puller.async_pull_images(**args)
-    when '/async_pull_image'  then puller.async_pull_image(**args)
+    when '/sha'         then puller.sha(**args)
+    when '/alive'       then puller.alive?(**args)
+    when '/ready'       then puller.ready?(**args)
+    when '/pull_images' then puller.pull_images(**args)
+    when '/pull_image'  then puller.pull_image(**args)
     else raise RequestError, 'unknown path'
     end
   rescue JSON::JSONError
