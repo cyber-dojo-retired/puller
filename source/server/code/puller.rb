@@ -22,8 +22,7 @@ class Puller
   # - - - - - - - - - - - - - - - -
 
   def pull_images(id:, image_name:)
-    n = 16
-    n.times do |i|
+    16.times do |i|
       runner('runner').pull_image(id+"-#{i}", image_name)
     end
     { 'pull_images' => 'TODO' }
