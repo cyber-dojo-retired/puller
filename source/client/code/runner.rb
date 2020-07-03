@@ -20,10 +20,10 @@ class Runner
 
   # - - - - - - - - - - - - - - - -
 
-  def pull_images(id:, image_name:)
+  def pull_image(id:, image_name:)
     # TODO: write to /tmp/ file so test can retrieve it
-    puts "id:#{id}, image_name:#{image_name}"
-
+    puts("tid:#{Thread.current.object_id}, id:#{id}, image_name:#{image_name}")
+    #sleep 1
     { 'pull_image' => 'TODO' }
   end
 

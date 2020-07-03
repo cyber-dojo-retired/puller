@@ -1,8 +1,7 @@
 FROM cyberdojo/rack-base:bd4161e
 LABEL maintainer=jon@jaggersoft.com
 
-RUN apk add --no-cache tini
-RUN gem install --no-document 'httpray'
+RUN apk add --no-cache curl tini
 
 COPY --chown=nobody:nogroup . /app
 
