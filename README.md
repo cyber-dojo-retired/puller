@@ -18,6 +18,6 @@ the number of new images in a start-point deployment is quite small). However, e
 long-lived servers this approach is not ideal, and it is hopeless for short-lived
 servers, which are often on low bandwidth networks. A better approach, for both
 kinds of server, is to pull a session's image (eg cyberdojofoundation/csharp_nunit:1452bb7) on
-*all* nodes when a session is created.  
+*all* nodes when a session is created, if it is not already present.
 
 ![cyber-dojo.org home page](https://github.com/cyber-dojo/cyber-dojo/blob/master/shared/home_page_snapshot.png)
