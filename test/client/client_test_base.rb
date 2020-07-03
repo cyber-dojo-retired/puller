@@ -1,6 +1,6 @@
 require_relative '../id58_test_base'
 require_src 'externals'
-require_src 'puller_http_proxy'
+require_src 'runner'
 
 class ClientTestBase < Id58TestBase
 
@@ -12,8 +12,8 @@ class ClientTestBase < Id58TestBase
     @externals ||= Externals.new
   end
 
-  def puller
-    @puller ||= PullerHttpProxy.new(externals)
+  def runner
+    @runner ||= Runner.new(externals)
   end
 
 end

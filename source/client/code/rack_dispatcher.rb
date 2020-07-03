@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative 'http_json/request_error'
 require_relative 'http_json_args'
 require 'json'
@@ -5,15 +6,15 @@ require 'rack'
 
 class RackDispatcher
 
-  def initialize(puller)
-    @puller = puller
+  def initialize(runner)
+    @runner = runner
   end
 
   def call(env)
     request = Rack::Request.new(env)
     path = request.path_info
     name,args = HttpJsonArgs.new.get(path)
-    result = @puller.public_send(name, *args)
+    result = @runner.public_send(name, *args)
     json_response_success({ name => result })
   rescue HttpJson::RequestError => error
     json_response_failure(400, path, error)
@@ -47,7 +48,7 @@ class RackDispatcher
   def diagnostic(path, error)
     { 'exception' => {
         'path' => path,
-        'class' => 'PullerHttpProxy',
+        'class' => 'Runner',
         'message' => error.message,
         'backtrace' => error.backtrace
       }

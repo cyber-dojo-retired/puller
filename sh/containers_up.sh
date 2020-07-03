@@ -96,8 +96,8 @@ warn_if_unclean()
   local -r name="${1}"
   local server_log=$(docker logs "${name}" 2>&1)
 
-  local -r mismatched_indent_warning="application(.*): warning: mismatched indentations at 'rescue' with 'begin'"
-  server_log=$(strip_known_warning "${server_log}" "${mismatched_indent_warning}")
+  #local -r mismatched_indent_warning="application(.*): warning: mismatched indentations at 'rescue' with 'begin'"
+  #server_log=$(strip_known_warning "${server_log}" "${mismatched_indent_warning}")
 
   local -r line_count=$(echo -n "${server_log}" | grep --count '^')
   printf "Checking ${name} started cleanly..."
@@ -152,8 +152,5 @@ container_up()
 # - - - - - - - - - - - - - - - - - - -
 export NO_PROMETHEUS=true
 
-if [ "${1:-}" == 'server' ]; then
-  container_up_ready_and_clean "${CYBER_DOJO_PULLER_PORT}"        puller-server
-else
-  container_up_ready_and_clean "${CYBER_DOJO_PULLER_CLIENT_PORT}" puller-client
-fi
+container_up_ready_and_clean "${CYBER_DOJO_PULLER_PORT}"        puller-server
+container_up_ready_and_clean "${CYBER_DOJO_PULLER_CLIENT_PORT}" puller-client

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative 'http_json/request_packer'
 require_relative 'http_json/response_unpacker'
 require_relative 'http_json/exception'
