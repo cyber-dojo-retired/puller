@@ -1,6 +1,6 @@
 require_relative 'client_test_base'
 require_src 'http_json/response_unpacker'
-require_src 'http_json/service_exception'
+require_src 'http_json/exception'
 require 'ostruct'
 
 class HttpResponseUnpackerTest < ClientTestBase
@@ -28,7 +28,7 @@ class HttpResponseUnpackerTest < ClientTestBase
 
   # - - - - - - - - - - - - - - - - -
 
-  class ResponseException < HttpJson::ServiceException
+  class ResponseException < HttpJson::Exception
     def initialize(message)
       super
     end
@@ -70,7 +70,9 @@ class HttpResponseUnpackerTest < ClientTestBase
   end
 
   def assert_get_raises(body)
-    assert_raises(ResponseException) { unpacker(body).get('diff', [])}
+    assert_raises(ResponseException) {
+      unpacker(body).get('diff', [])
+    }
   end
 
 end

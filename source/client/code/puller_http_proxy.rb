@@ -1,12 +1,18 @@
 require_relative 'http_json/request_packer'
 require_relative 'http_json/response_unpacker'
-require_relative 'puller_exception'
+require_relative 'http_json/exception'
 
-class PullerService
+class PullerHttpProxy
+
+  class Exception < HttpJson::Exception
+    def initialize(message)
+      super
+    end
+  end
 
   def initialize(externals)
     requester = HttpJson::RequestPacker.new(externals.http, 'puller-server', 5017)
-    @http = HttpJson::ResponseUnpacker.new(requester, PullerException)
+    @http = HttpJson::ResponseUnpacker.new(requester, Exception)
   end
 
   # - - - - - - - - - - - - - - - - - -

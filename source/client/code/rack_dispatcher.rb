@@ -3,9 +3,7 @@ require_relative 'http_json_args'
 require 'json'
 require 'rack'
 
-class Puller
-
-  # TODO: This is not right...this is a rack-dispatcher
+class RackDispatcher
 
   def initialize(puller)
     @puller = puller
@@ -49,7 +47,7 @@ class Puller
   def diagnostic(path, error)
     { 'exception' => {
         'path' => path,
-        'class' => 'PullerClient',
+        'class' => 'PullerHttpProxy',
         'message' => error.message,
         'backtrace' => error.backtrace
       }
