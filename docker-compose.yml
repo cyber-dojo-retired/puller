@@ -1,0 +1,33 @@
+
+version: '3.7'
+
+services:
+
+  puller-client:
+    image: cyberdojo/puller-client
+    build:
+      args: [ CYBER_DOJO_PULLER_CLIENT_PORT ]
+      context: source/client
+    container_name: test-puller-client
+    depends_on:
+      - puller-server
+    ports: [ "${CYBER_DOJO_PULLER_CLIENT_PORT}:${CYBER_DOJO_PULLER_CLIENT_PORT}" ]
+    read_only: true
+    restart: "no"
+    tmpfs: /tmp
+    user: ${CYBER_DOJO_PULLER_CLIENT_USER}
+    volumes: [ "./test:/test:ro" ]
+
+  puller-server:
+    image: ${CYBER_DOJO_PULLER_IMAGE}
+    build:
+      args: [ COMMIT_SHA, CYBER_DOJO_PULLER_PORT ]
+      context: source/server
+    container_name: test-puller-server
+    environment: [ NO_PROMETHEUS ]
+    ports: [ "${CYBER_DOJO_PULLER_PORT}:${CYBER_DOJO_PULLER_PORT}" ]
+    read_only: true
+    restart: "no"
+    tmpfs: /tmp
+    user: ${CYBER_DOJO_PULLER_SERVER_USER}
+    volumes: [ "./test:/test:ro" ]
