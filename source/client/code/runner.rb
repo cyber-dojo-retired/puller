@@ -7,21 +7,24 @@ class Runner
   end
 
   def sha
-    ENV['SHA']
+    { 'sha' => ENV['SHA'] }
   end
 
   def alive?
-    true
+    { 'alive?' => true }
   end
 
   def ready?
-    puller.ready?
+    { 'ready?' => puller.ready? }
   end
 
   # - - - - - - - - - - - - - - - -
 
   def pull_images(id:, image_name:)
     # TODO: write to /tmp/ file so test can retrieve it
+    puts "id:#{id}, image_name:#{image_name}"
+
+    { 'pull_image' => 'TODO' }
   end
 
   private

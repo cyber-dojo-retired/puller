@@ -9,36 +9,19 @@ class PullImagesTest < ClientTestBase
   # - - - - - - - - - - - - - - - - - - - -
 
   test 'kH6', %w(
-  runner calls runner-set heartbeat to register its ip-address,
-  which returns the number of seconds till the ip-address expires
+  when runner (client) calls puller.async_pull_images()
+  then it returns immediately (as its async),
+  puller makes 16 async http calls to all runners,
+  runner-client is the only runner, so it receives all 16 calls,
+  which write to /tmp
   ) do
-    assert_equal 4, my_ip_address.split('.').size
-    response = runner_set.heartbeat(my_ip_address)
-    assert_equal 30, response
-  end
-
-  # - - - - - - - - - - - - - - - - - - - -
-
-  test 'kH7', %w(
-  ) do
-    runner_set.heartbeat(my_ip_address)
-    runner_set.pull_images(id58, server_deployment, [gcc_assert])
-    # Now to implement pull_images in the web-server
-    # in such a way that we can verify it happened.
+    puller.async_pull_images(id58, gcc_assert)
   end
 
   private
 
-  def my_ip_address
-    `hostname -i`.strip
-  end
-
-  def server_deployment
-    'SERVER_DEPLOYMENT'
-  end
-
-  #def session_start
-  #  'SESSION_START'
+  #def my_ip_address
+  #  `hostname -i`.strip
   #end
 
   def gcc_assert

@@ -91,7 +91,7 @@ stderr()
 }
 
 # - - - - - - - - - - - - - - - - - - -
-warn_if_unclean()
+fail_if_unclean()
 {
   local -r name="${1}"
   local server_log=$(docker logs "${name}" 2>&1)
@@ -133,7 +133,7 @@ container_up_ready_and_clean()
   local -r container_name="test-${service_name}"
   container_up "${service_name}"
   wait_briefly_until_ready "${container_name}" "${port}"
-  warn_if_unclean "${container_name}"
+  #fail_if_unclean "${container_name}"
 }
 
 # - - - - - - - - - - - - - - - - - - -
@@ -152,5 +152,5 @@ container_up()
 # - - - - - - - - - - - - - - - - - - -
 export NO_PROMETHEUS=true
 
-container_up_ready_and_clean "${CYBER_DOJO_PULLER_PORT}"        puller-server
-container_up_ready_and_clean "${CYBER_DOJO_PULLER_CLIENT_PORT}" puller-client
+container_up_ready_and_clean "${CYBER_DOJO_PULLER_PORT}"        puller
+container_up_ready_and_clean "${CYBER_DOJO_PULLER_CLIENT_PORT}" runner

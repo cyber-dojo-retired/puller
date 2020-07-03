@@ -12,7 +12,7 @@ class PullerHttpProxy
   end
 
   def initialize(externals)
-    requester = HttpJson::RequestPacker.new(externals.http, 'puller-server', 5017)
+    requester = HttpJson::RequestPacker.new(externals.http, 'puller', 5017)
     @http = HttpJson::ResponseUnpacker.new(requester, Exception)
   end
 

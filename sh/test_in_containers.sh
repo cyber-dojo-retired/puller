@@ -27,21 +27,21 @@ main()
 on_ci() { [ -n "${CIRCLECI:-}" ]; }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - -
-run_client_tests() { run_tests "${client_user}" client "${@:-}"; }
-run_server_tests() { run_tests "${server_user}" server "${@:-}"; }
+run_client_tests() { run_tests "${client_user}" client runner "${@:-}"; }
+run_server_tests() { run_tests "${server_user}" server puller "${@:-}"; }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - -
 run_tests()
 {
   local -r user="${1}" # eg nobody
   local -r type="${2}" # eg client|server
+  local -r container_name="test-${3}"
   local -r reports_dir_name=reports
   local -r tmp_dir=/tmp
   local -r coverage_root=/${tmp_dir}/${reports_dir_name}
   local -r test_dir="${root_dir}/test/${type}"
   local -r reports_dir=${test_dir}/${reports_dir_name}
   local -r test_log=test.log
-  local -r container_name="test-${my_name}-${type}"
   local -r coverage_code_tab_name=tested
   local -r coverage_test_tab_name=tester
 
