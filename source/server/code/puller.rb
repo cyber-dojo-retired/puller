@@ -22,8 +22,8 @@ class Puller
   # - - - - - - - - - - - - - - - -
 
   def async_pull_images(id:, image_name:)
-    16.times do
-      runner_async('runner').pull_image(id, image_name)
+    16.times do |i|
+      runner_async('runner').pull_image(id+"-#{i}", image_name)
     end
     { 'async_pull_images' => nil }
   end

@@ -2,7 +2,7 @@
 require_relative 'puller_test_base'
 require_relative 'external_http_async_spy'
 
-class AsyncPullTest < PullerTestBase
+class PullTest < PullerTestBase
 
   def self.id58_prefix
     '37f'
@@ -21,7 +21,7 @@ class AsyncPullTest < PullerTestBase
       assert_equal 'runner', spied[:hostname], :hostname
       assert_equal 4597, spied[:port], :port
       assert_equal 'pull_image', spied[:path], :path
-      expected_body = { id:id58, image_name:gcc_assert }
+      expected_body = { id:id58+"-#{i}", image_name:gcc_assert }
       actual_body = spied[:body]
       assert_equal expected_body, actual_body, :body
     end
