@@ -1,6 +1,6 @@
 require_relative 'puller_test_base'
 require_relative 'rack_request_stub'
-require_src 'rack_dispatcher'
+require_source 'rack_dispatcher'
 
 class RackDispatcherTest < PullerTestBase
 

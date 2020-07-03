@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 require_relative 'puller_test_base'
-require_src 'http_json_args'
+require_source 'http_json_args'
 
 class HttpJsonArgsTest < PullerTestBase
 

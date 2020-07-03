@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require_relative '../id58_test_base'
-require_src 'externals'
-require_src 'puller'
+require_source 'externals'
+require_source 'puller'
 
 class PullerTestBase < Id58TestBase
 

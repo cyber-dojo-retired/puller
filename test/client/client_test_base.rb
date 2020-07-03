@@ -1,6 +1,6 @@
 require_relative '../id58_test_base'
-require_src 'externals'
-require_src 'runner'
+require_source 'externals'
+require_source 'runner'
 
 class ClientTestBase < Id58TestBase
 
