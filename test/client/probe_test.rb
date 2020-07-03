@@ -9,19 +9,19 @@ class ProbeTest < ClientTestBase
   # - - - - - - - - - - - - - - - - - - - -
 
   test '946', 'alive? 200' do
-    assert runner_set.alive?
+    assert puller.alive?
   end
 
   # - - - - - - - - - - - - - - - - - - - -
 
   test '947', 'ready? 200' do
-    assert runner_set.ready?
+    assert puller.ready?
   end
 
   # - - - - - - - - - - - - - - - - - - - -
 
   test '945', 'sha 200' do
-    sha = runner_set.sha
+    sha = puller.sha
     assert_equal 40, sha.size, 'sha.size'
     sha.each_char do |ch|
       assert '0123456789abcdef'.include?(ch), ch

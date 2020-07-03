@@ -1,6 +1,6 @@
 require_relative 'http_json/service_exception'
 
-class RunnerSetException < HttpJson::ServiceException
+class PullerException < HttpJson::ServiceException
 
   def initialize(message)
     super

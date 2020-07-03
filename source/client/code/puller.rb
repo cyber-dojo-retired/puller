@@ -3,23 +3,19 @@ require_relative 'http_json_args'
 require 'json'
 require 'rack'
 
-class Runner
+class Puller
 
-  # This is not right...this is a rack-dispatcher
-  # This needs mimic a runner and have its own
-  # ready?
-  # pull_images()
-  # run_cyber_dojo_sh()
+  # TODO: This is not right...this is a rack-dispatcher
 
-  def initialize(runner_set)
-    @runner_set = runner_set
+  def initialize(puller)
+    @puller = puller
   end
 
   def call(env)
     request = Rack::Request.new(env)
     path = request.path_info
     name,args = HttpJsonArgs.new.get(path)
-    result = @runner_set.public_send(name, *args)
+    result = @puller.public_send(name, *args)
     json_response_success({ name => result })
   rescue HttpJson::RequestError => error
     json_response_failure(400, path, error)
@@ -41,7 +37,7 @@ class Runner
     json_response(status, body)
   end
 
-  def json_response(status, json)
+  def json_response(status, body)
     [ status,
       { 'Content-Type' => 'application/json' },
       [ body ]
@@ -53,7 +49,7 @@ class Runner
   def diagnostic(path, error)
     { 'exception' => {
         'path' => path,
-        'class' => 'RunnerSet',
+        'class' => 'PullerClient',
         'message' => error.message,
         'backtrace' => error.backtrace
       }

@@ -1,6 +1,6 @@
 require_relative '../id58_test_base'
 require_src 'externals'
-require_src 'runner_set_service'
+require_src 'puller_service'
 
 class ClientTestBase < Id58TestBase
 
@@ -12,8 +12,8 @@ class ClientTestBase < Id58TestBase
     @externals ||= Externals.new
   end
 
-  def runner_set
-    @runner_set ||= RunnerSetService.new(externals)
+  def puller
+    @puller ||= PullerService.new(externals)
   end
 
 end
