@@ -2,7 +2,8 @@
 
 - The source for the [cyberdojo/puller](https://hub.docker.com/r/cyberdojo/puller/tags) Docker image.
 - A docker-containerized micro-service for [https://cyber-dojo.org](https://cyber-dojo.org).
-- An http service (rack based) for pulling docker images onto a node.
+- An http service (rack based) for pulling docker images onto
+[cyberdojo/runner](https://github.com/cyber-dojo/runner) nodes.
 
 When a `run_cyber_dojo_sh(id,files,manifest)` call reaches one of the `runner`
 daemonSet pods we want the docker image (whose name is in the `manifest` argument)
