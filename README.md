@@ -5,14 +5,14 @@
 - A [Rack](https://github.com/rack/rack) based http server for pulling docker images onto
 [cyberdojo/runner](https://github.com/cyber-dojo/runner) nodes.
 
-When a `run_cyber_dojo_sh(id,files,manifest)` call reaches one of the `runner`
-daemonSet pods we want the language-test-framework image (whose name is in the `manifest`
-argument, eg `cyberdojofoundation/gcc_assert:93eefc6`) to *already* be on the node, otherwise
-the likely result will be a 'false' timeout if the docker-run is allowed (which will
-implicitly pull the image).  Worse, it will *always* timeout if the image contains
-a layer that never finishes downloading (eg because it is very large and/or the network
-is low bandwidth) before the docker-run is stopped. Hence we want the docker image to be on
-*all* nodes. However, Kubernetes provides no way to call *all* pods in a daemonSet :(
+When `run_cyber_dojo_sh(id,files,manifest)` reaches a `runner` daemonSet pod we want the
+[language-test-framework](https://github.com/cyber-dojo-languages) image names in the `manifest`
+(eg `cyberdojofoundation/gcc_assert:93eefc6`) to *already* be on the node, otherwise the likely
+result will be a 'false' timeout if the docker-run is allowed (which will implicitly pull the image).  
+Worse, it will *always* timeout if the image contains a layer that never finishes downloading
+(eg because it is very large and/or the network is low bandwidth) before the docker-run is stopped.
+Hence we want the docker image to be on *all* nodes. However, Kubernetes provides no way to call
+*all* pods in a daemonSet :(
 
 A long-lived server such as https://cyber-dojo.org can work around this, eg by
 making the start-point services daemonSets which pull all images when deployed (typically
