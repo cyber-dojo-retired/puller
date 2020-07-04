@@ -1,8 +1,17 @@
 # frozen_string_literal: true
-require_relative 'http_json/request_error'
 require 'json'
 
 class HttpJsonArgs
+
+  class RequestError < RuntimeError
+    def initialize(message)
+      # message uses the words 'body' and 'path'
+      # to match RackDispatcher's exception keys.
+      super
+    end
+  end
+
+  # - - - - - - - - - - - - - - - -
 
   def get(path, runner, body)
     args = parse_json_args(body)
@@ -12,7 +21,7 @@ class HttpJsonArgs
     when '/ready'      then runner.ready?(**args)
     when '/pull_image' then runner.pull_image(**args)
     else
-      raise HttpJson::RequestError, 'unknown path'
+      raise RequestError, 'unknown path'
     end
   end
 
@@ -23,7 +32,7 @@ class HttpJsonArgs
     unless body === ''
       json = JSON.parse!(body)
       unless json.is_a?(Hash)
-        raise HttpJson::RequestError, 'body is not JSON Hash'
+        raise RequestError, 'body is not JSON Hash'
       end
       # double-splat requires symbol keys
       json.each { |key,value| args[key.to_sym] = value }
