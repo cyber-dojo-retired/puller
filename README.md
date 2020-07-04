@@ -11,9 +11,11 @@ Worse, it will *always* timeout if the image contains a layer that never finishe
 
 A long-lived server such as https://cyber-dojo.org can work around this, eg by
 making the start-point services daemonSets which pull all images when deployed (typically
-the number of new images in a start-point deployment is quite small). However, even for
+the number of *new* images in a start-point deployment is quite small). However, even for
 long-lived servers this approach is not ideal, and it is hopeless for short-lived
 servers, which are often on low bandwidth networks. A better approach is to pull a session's
 image (eg `cyberdojofoundation/csharp_nunit:1452bb7`) on *all* nodes when a session is created.
+
+***
 
 ![cyber-dojo.org home page](https://github.com/cyber-dojo/cyber-dojo/blob/master/shared/home_page_snapshot.png)
