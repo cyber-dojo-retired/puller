@@ -6,14 +6,14 @@ require 'rack'
 class RackDispatcher
 
   def initialize(runner)
-    @runner = runner
+    @dispatcher = HttpJsonArgs.new(runner)
   end
 
   def call(env)
     request = Rack::Request.new(env)
     path = request.path_info
     body = request.body.read
-    result = HttpJsonArgs.new.get(path, @runner, body)
+    result = @dispatcher.get(path, body)
     json_response_success(result)
   rescue HttpJsonArgs::RequestError => error
     json_response_failure(400, path, error)

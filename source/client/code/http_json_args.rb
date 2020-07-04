@@ -13,13 +13,17 @@ class HttpJsonArgs
 
   # - - - - - - - - - - - - - - - -
 
-  def get(path, runner, body)
+  def initialize(runner)
+    @runner = runner
+  end
+
+  def get(path, body)
     args = parse_json_args(body)
     case path
-    when '/sha'        then runner.sha(**args)
-    when '/alive'      then runner.alive?(**args)
-    when '/ready'      then runner.ready?(**args)
-    when '/pull_image' then runner.pull_image(**args)
+    when '/sha'        then @runner.sha(**args)
+    when '/alive'      then @runner.alive?(**args)
+    when '/ready'      then @runner.ready?(**args)
+    when '/pull_image' then @runner.pull_image(**args)
     else
       raise RequestError, 'unknown path'
     end
