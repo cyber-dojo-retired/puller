@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'json'
 
-class HttpJsonArgs
+class RunnerCaller
 
   class RequestError < RuntimeError
     def initialize(message)
@@ -17,7 +17,7 @@ class HttpJsonArgs
     @runner = runner
   end
 
-  def get(path, body)
+  def call(path, body)
     args = parse_json_args(body)
     case path
     when '/sha'        then @runner.sha(**args)
