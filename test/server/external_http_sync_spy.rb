@@ -13,11 +13,9 @@ class ExternalHttpSyncSpy
     OpenStruct.new(content_type:'', body:'')
   end
 
-  def start(hostname, port, request)
+  def start(_hostname, _port, request)
     @spied << {
       uri:@uri,
-      hostname:hostname,
-      port:port,
       request:request
     }
     body = { @name => {} }.to_json

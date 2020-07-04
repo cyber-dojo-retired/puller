@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require_relative 'puller_test_base'
 require_relative 'external_http_sync_spy'
+require 'uri'
 
 class PullImagesTest < PullerTestBase
 
@@ -18,15 +19,11 @@ class PullImagesTest < PullerTestBase
     puller.pull_images(id:id58, image_name:gcc_assert)
     16.times do |i|
       spied = http.spied[i]
-      assert_equal 'runner', spied[:hostname], :hostname
-      assert_equal 4597, spied[:port], :port
-      
-      #assert_equal 'pull_image', spied[:path], :path # TODO
-
-      # TODO
-      #expected_body = { id:id58+"-#{i}", image_name:gcc_assert }
-      #actual_body = spied[:body]
-      #assert_equal expected_body, actual_body, :body
+      assert_equal URI.parse('http://runner:4597/pull_image'), spied[:uri], :uri
+      assert_equal 'application/json', spied[:request]['content_type'], :content_type
+      expected_body = { 'id' => id58+"-#{i}", 'image_name' => gcc_assert }
+      actual_body = JSON.parse!(spied[:request]['body'])
+      assert_equal expected_body, actual_body, :body
     end
   end
 
