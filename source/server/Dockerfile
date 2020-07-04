@@ -1,7 +1,5 @@
-FROM cyberdojo/rack-base:bd4161e
+FROM cyberdojo/rack-base:2e387b6
 LABEL maintainer=jon@jaggersoft.com
-
-RUN apk add --no-cache curl tini
 
 COPY --chown=nobody:nogroup . /app
 
