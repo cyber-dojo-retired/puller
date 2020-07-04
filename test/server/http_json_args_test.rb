@@ -37,23 +37,13 @@ class HttpJsonArgsTest < PullerTestBase
   end
 
   test 'e16', %w(
-  /async_pull_images has 2 keyword args, id: image_name:
+  /pull_images has 2 keyword args, id: image_name:
   ) do
     http = ExternalHttpAsyncSpy.new
     externals(http_async:http)
     body = { id:id58, image_name:gcc_assert }.to_json
-    result = dispatch('/async_pull_images', puller, body)
-    assert_equal ['async_pull_images'], result.keys
-  end
-
-  test 'e17', %w(
-  /async_pull_image has 3 keyword args, id: image_name: ip_address:
-  ) do
-    http = ExternalHttpAsyncSpy.new
-    externals(http_async:http)
-    body = { id:id58, image_name:gcc_assert, ip_address:'10.2.5.78' }.to_json
-    result = dispatch('/async_pull_image', puller, body)
-    assert_equal ['async_pull_image'], result.keys
+    result = dispatch('/pull_images', puller, body)
+    assert_equal ['pull_images'], result.keys
   end
 
   # - - - - - - - - - - - - - - - - -
@@ -93,48 +83,21 @@ class HttpJsonArgsTest < PullerTestBase
   # - - - - - - - - - - - - - - - - -
 
   test '7B2',
-  %w( async_pull_images() missing id raises HttpJsonArgs::RequestError ) do
+  %w( pull_images() missing id raises HttpJsonArgs::RequestError ) do
     body = { image_name:gcc_assert }.to_json
     error = assert_raises(HttpJsonArgs::RequestError) {
-      dispatch('/async_pull_images', puller, body)
+      dispatch('/pull_images', puller, body)
     }
     assert_equal 'missing argument: :id', error.message
   end
 
   test '7B3',
-  %w( async_pull_images() missing image_name raises HttpJsonArgs::RequestError ) do
+  %w( pull_images() missing image_name raises HttpJsonArgs::RequestError ) do
     body = { id:id58 }.to_json
     error = assert_raises(HttpJsonArgs::RequestError) {
-      dispatch('/async_pull_images', puller, body)
+      dispatch('/pull_images', puller, body)
     }
     assert_equal 'missing argument: :image_name', error.message
-  end
-
-  test '7B4',
-  %w( async_pull_image() missing id raises HttpJsonArgs::RequestError ) do
-    body = { image_name:gcc_assert, ip_address:'10.4.6.87' }.to_json
-    error = assert_raises(HttpJsonArgs::RequestError) {
-      dispatch('/async_pull_image', puller, body)
-    }
-    assert_equal 'missing argument: :id', error.message
-  end
-
-  test '7B5',
-  %w( async_pull_image() missing image_name raises HttpJsonArgs::RequestError ) do
-    body = { id:id58, ip_address:'10.4.6.87' }.to_json
-    error = assert_raises(HttpJsonArgs::RequestError) {
-      dispatch('/async_pull_image', puller, body)
-    }
-    assert_equal 'missing argument: :image_name', error.message
-  end
-
-  test '7B6',
-  %w( async_pull_image() missing ip_address raises HttpJsonArgs::RequestError ) do
-    body = { id:id58, image_name:gcc_assert }.to_json
-    error = assert_raises(HttpJsonArgs::RequestError) {
-      dispatch('/async_pull_image', puller, body)
-    }
-    assert_equal 'missing argument: :ip_address', error.message
   end
 
   # - - - - - - - - - - - - - - - - -
@@ -158,24 +121,13 @@ class HttpJsonArgsTest < PullerTestBase
   end
 
   test 'c55',
-  %w( async_pull_images() unknown arg raises HttpJsonArgs::RequestError ) do
+  %w( pull_images() unknown arg raises HttpJsonArgs::RequestError ) do
     body = {
       id:id58,
       image_name:gcc_assert,
       whiskey:nil # unknown
     }
-    assert_unknown_arg('/async_pull_images', body, 'whiskey')
-  end
-
-  test 'c56',
-  %w( async_pull_image() unknown arg raises HttpJsonArgs::RequestError ) do
-    body = {
-      id:id58,
-      image_name:gcc_assert,
-      ip_address:'10.5.6.23',
-      whiskey:nil # unknown
-    }
-    assert_unknown_arg('/async_pull_image', body, 'whiskey')
+    assert_unknown_arg('/pull_images', body, 'whiskey')
   end
 
   # - - - - - - - - - - - - - - - - -
@@ -199,26 +151,14 @@ class HttpJsonArgsTest < PullerTestBase
   end
 
   test 'd55',
-  %w( async_pull_images() extra unknown args raises HttpJsonArgs::RequestError ) do
+  %w( pull_images() extra unknown args raises HttpJsonArgs::RequestError ) do
     body = {
       id:id58,
       image_name:gcc_assert,
       flag:true, # unknown
       a:'dfg'    # unknown
     }
-    assert_unknown_args('/async_pull_images', body, 'flag', 'a')
-  end
-
-  test 'd56',
-  %w( async_pull_image() extra unknown args raises HttpJsonArgs::RequestError ) do
-    body = {
-      id:id58,
-      image_name:gcc_assert,
-      ip_address:'10.56.7.23',
-      flaggon:true, # unknown
-      abc:'dfg'    # unknown
-    }
-    assert_unknown_args('/async_pull_image', body, 'flaggon', 'abc')
+    assert_unknown_args('/pull_images', body, 'flag', 'a')
   end
 
   private

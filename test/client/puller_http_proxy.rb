@@ -39,14 +39,4 @@ class PullerHttpProxy
     })
   end
 
-  # - - - - - - - - - - - - - - - - - -
-
-  def pull_image(id, image_name, ip_address)
-    @http.post(__method__, {
-      id:id,
-      image_name:image_name,
-      ip_address:ip_address
-    })
-  end
-
 end

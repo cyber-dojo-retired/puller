@@ -14,7 +14,7 @@ class RackDispatcherTest < PullerTestBase
 
   test '130', %w(
   allow empty body instead of {} which is
-  useful for kubernetes live/ready probes ) do
+  useful for kubernetes liveness/readyness probes ) do
     response = rack_call('ready', '')
     assert_equal 200, response[0]
     assert_equal({ 'Content-Type' => 'application/json' }, response[1])
@@ -42,23 +42,16 @@ class RackDispatcherTest < PullerTestBase
     end
   end
 
-  test '135', 'async_pull_images 200' do
+=begin TODO
+  test '135', 'pull_images 200' do
     http = ExternalHttpAsyncSpy.new
     externals(http_async:http)
     args = { id:id58, image_name:gcc_assert }
-    assert_200('async_pull_images', args) do |response|
+    assert_200('pull_images', args) do |response|
       assert_nil response['async_pull_images']
     end
   end
-
-  test '136', 'async_pull_image 200' do
-    http = ExternalHttpAsyncSpy.new
-    externals(http_async:http)
-    args = { id:id58, image_name:gcc_assert, ip_address:'10.3.5.67' }
-    assert_200('async_pull_image', args) do |response|
-      assert_nil response['async_pull_image']
-    end
-  end
+=end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - -
   # 400
@@ -94,33 +87,15 @@ class RackDispatcherTest < PullerTestBase
   end
 
   test 'E27',
-  %w( async_pull_images returns 400 when id is missing ) do
+  %w( pull_images returns 400 when id is missing ) do
     args = { image_name:gcc_assert }.to_json
-    assert_dispatch_error('async_pull_images', args, 400, 'missing argument: :id')
+    assert_dispatch_error('pull_images', args, 400, 'missing argument: :id')
   end
 
   test 'E28',
-  %w( async_pull_images returns 400 when image_name is missing ) do
+  %w( pull_images returns 400 when image_name is missing ) do
     args = { id:id58 }.to_json
-    assert_dispatch_error('async_pull_images', args, 400, 'missing argument: :image_name')
-  end
-
-  test 'E29',
-  %w( async_pull_image returns 400 when id is missing ) do
-    args = { image_name:gcc_assert, ip_address:'10.4.5.6' }.to_json
-    assert_dispatch_error('async_pull_image', args, 400, 'missing argument: :id')
-  end
-
-  test 'E30',
-  %w( async_pull_image returns 400 when image_name is missing ) do
-    args = { id:id58, ip_address:'10.4.5.6' }.to_json
-    assert_dispatch_error('async_pull_image', args, 400, 'missing argument: :image_name')
-  end
-
-  test 'E31',
-  %w( async_pull_image returns 400 when ip_address is missing ) do
-    args = { id:id58, image_name:gcc_assert }.to_json
-    assert_dispatch_error('async_pull_image', args, 400, 'missing argument: :ip_address')
+    assert_dispatch_error('pull_images', args, 400, 'missing argument: :image_name')
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - -

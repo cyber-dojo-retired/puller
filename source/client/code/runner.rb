@@ -2,8 +2,8 @@
 
 class Runner
 
-  def initialize(externals)
-    @externals = externals
+  def initialize(_externals)
+    #@externals = externals
   end
 
   def sha
@@ -15,7 +15,7 @@ class Runner
   end
 
   def ready?
-    { 'ready?' => puller.ready? }
+    { 'ready?' => true }
   end
 
   # - - - - - - - - - - - - - - - -
@@ -29,12 +29,6 @@ class Runner
       sleep 1
     })
     { 'pull_image' => 'TODO' } # return ip-address?
-  end
-
-  private
-
-  def puller
-    @externals.puller
   end
 
 end

@@ -1,6 +1,6 @@
-require_relative 'client_test_base'
+require_relative 'runner_test_base'
 
-class ProbeTest < ClientTestBase
+class ProbeTest < RunnerTestBase
 
   def self.id58_prefix
     '89s'

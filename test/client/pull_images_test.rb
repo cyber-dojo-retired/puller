@@ -1,6 +1,6 @@
-require_relative 'client_test_base'
+require_relative 'runner_test_base'
 
-class PullImagesTest < ClientTestBase
+class PullImagesTest < RunnerTestBase
 
   def self.id58_prefix
     'qU6'
@@ -9,25 +9,18 @@ class PullImagesTest < ClientTestBase
   # - - - - - - - - - - - - - - - - - - - -
 
   test 'kH6', %w(
-  when runner (client) calls puller.async_pull_images()
-  then it returns immediately (as its async),
-  puller makes 16 async http calls to all runners,
-  runner-client is the only runner, so it receives all 16 calls,
-  which write to /tmp
+  when anyone calls puller.pull_images() it makes 16 synchronous http calls to hostname='runner',
+  any runner responding to this by actually pulling the image
+  must pull in a detached-fork so the original caller (who is creating a new session)
+  gets the 6-character id back in a timely fashion, and can proceed to their kata;
+  In this test, runner-client (us) is the only runner, so we receive all 16 calls,
+  one of which simulates pulling the image
   ) do
     puller.pull_images(id58, gcc_assert)
     #TODO
   end
 
-  # TODO
-  # puller.pull_images(id58, gcc_assert, my_ip_address)
-  # ...
-
   private
-
-  #def my_ip_address
-  #  `hostname -i`.strip
-  #end
 
   def gcc_assert
     'cyberdojofoundation/gcc_assert:93eefc6'

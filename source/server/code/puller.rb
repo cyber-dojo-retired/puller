@@ -30,13 +30,6 @@ class Puller
 
   # - - - - - - - - - - - - - - - -
 
-  def pull_image(id:, image_name:, ip_address:)
-    runner(ip_address).pull_image(id, image_name)
-    { 'pull_image' => 'TODO' }
-  end
-
-  # - - - - - - - - - - - - - - - -
-
   private
 
   def runner(hostname)

@@ -1,9 +1,10 @@
-require_relative 'client_test_base'
+# frozen_string_literal: true
+require_relative 'puller_test_base'
 require_source 'http_json/response_unpacker'
 require_source 'http_json/exception'
 require 'ostruct'
 
-class HttpResponseUnpackerTest < ClientTestBase
+class HttpResponseUnpackerTest < PullerTestBase
 
   def self.id58_prefix
     'C20'

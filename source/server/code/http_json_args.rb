@@ -20,7 +20,6 @@ class HttpJsonArgs
     when '/alive'       then puller.alive?(**args)
     when '/ready'       then puller.ready?(**args)
     when '/pull_images' then puller.pull_images(**args)
-    when '/pull_image'  then puller.pull_image(**args)
     else raise RequestError, 'unknown path'
     end
   rescue JSON::JSONError

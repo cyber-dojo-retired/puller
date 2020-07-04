@@ -43,8 +43,6 @@ class RackDispatcher
     ]
   end
 
-  # - - - - - - - - - - - - - - - -
-
   def diagnostic(path, error)
     { 'exception' => {
         'path' => path,
