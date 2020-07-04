@@ -27,4 +27,12 @@ class PullImagesTest < PullerTestBase
     end
   end
 
+  # - - - - - - - - - - - - - - - - -
+
+  test 'aB1', %w(
+  pull_images() make 16 synchronous http calls to hostname runner
+  ) do
+    puller.pull_images(id:id58, image_name:gcc_assert)
+  end
+
 end
