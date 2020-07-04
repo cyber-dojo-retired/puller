@@ -39,8 +39,8 @@ class HttpJsonArgsTest < PullerTestBase
   test 'e16', %w(
   /pull_images has 2 keyword args, id: image_name:
   ) do
-    http = ExternalHttpAsyncSpy.new
-    externals(http_async:http)
+    http = ExternalHttpSyncSpy.new('pull_image')
+    externals(http:http)    
     body = { id:id58, image_name:gcc_assert }.to_json
     result = dispatch('/pull_images', puller, body)
     assert_equal ['pull_images'], result.keys

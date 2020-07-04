@@ -8,8 +8,8 @@ class ExternalsTest < PullerTestBase
   end
 
   test '921',
-  %w( default http is Net::HTTP ) do
-    assert_equal 'Net::HTTP', externals.http.name
+  %w( default http is ExternalHttpSync ) do
+    assert externals.http.is_a?(ExternalHttpSync)
   end
 
 end
